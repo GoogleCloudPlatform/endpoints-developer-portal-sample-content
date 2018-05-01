@@ -1,0 +1,38 @@
+# Copyright 2018 Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+# The ordering list specifies the order in which the pages and folders will
+# appear in your portal's navigation. If a page or folder name is not included,
+# then it will not appear in your portal.
+#
+# 'Introduction', 'API Reference', and 'Resources' are special sections,
+# and will always appear in your portal.
+#
+# If you add a folder to 'ordering', be sure to add a corresponding entry
+# in the 'folders' map below.
+ordering:
+- Introduction
+- Guides
+- API Reference
+- Resources
+
+folders:
+  Guides:
+    # If you want to have sub-folders, you can add another 'folders' map within
+    # this folder's configuration.
+    # In this example, there is only a 'Getting Started' page and no sub-folders.
+    # The add_example_page script will add a page named 'Example Page' here.
+    ordering:
+    - Getting Started
