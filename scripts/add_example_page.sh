@@ -56,6 +56,9 @@ main() {
     exit 1
   fi
 
+  # Set credential helper to gcloud for authenticating to Cloud Source Repositories.
+  git config credential.'https://source.developers.google.com'.helper gcloud.sh
+
   # Get the string before the first period from the service name to use as a prefix to the repo name
   local repo_prefix="${service_name%%.*}"
   # Get the epoch seconds to use as a suffix so the command doesn't fail if ran multiple times
@@ -83,7 +86,8 @@ main() {
   # Commit and push changes to the repo that was previously created
   git add --all
   git commit -m "Example Page added by add_example_page.sh script" || \
-      git commit -m "Example Page added by add_example_page.sh script" | grep -q "Your branch is up to date"
+      git commit -m "Example Page added by add_example_page.sh script" | \
+      grep -q -E "Your branch is up to date|Your branch is ahead of 'origin/master'"
   git push -u origin master
 
   echo

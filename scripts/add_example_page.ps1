@@ -70,6 +70,9 @@ Function Main()
         Write-Host "Service $service_name was found"
     }
 
+    # Set credential helper to gcloud for authenticating to Cloud Source Repositories.
+    git config credential.https://source.developers.google.com.helper gcloud.cmd
+
     # Get the string before the first period from the service name to use as a prefix to the repo name
     $repo_prefix = ($service_name).Split('.')[0]
     # Get the epoch seconds to use as a suffix so the command doesn't fail if ran multiple times
@@ -99,11 +102,18 @@ Function Main()
     # Commit and push changes to the repo that was previously created
     git add --all
     git commit -m "Example Page added by add_example_page.sh script"
-    if ($?)
+    if (!$?)
     {
-        git commit -m "Example Page added by add_example_page.sh script" | findstr "Your branch is up to date"
-        git push -u origin master
+        # If commit failed, check if it's because we're already in an OK state
+        # to push (possibly from a failed previous run), or if it's because
+        # something else went wrong.
+        $searchresults = git commit -m "Example Page added by add_example_page.sh script" | select-string -pattern "(Your branch is up to date)|(Your branch is ahead of origin/master')"
+        if ($searchresults -eq $null) {
+            Write-Host "git repository not in a good state to push."
+            exit 1
+        }
     }
+    git push -u origin master
 
     Write-Host "Successfully forked example repository"
     Write-Host
