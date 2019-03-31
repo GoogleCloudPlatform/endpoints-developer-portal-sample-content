@@ -74,7 +74,7 @@ main() {
   git remote add upstream "${git_url}" >/dev/null 2>&1 || git remote set-url upstream "${git_url}" >/dev/null 2>&1
 
   # Copy and rename the host directory
-  cp -rfT "../default.api.host" "../${service_name}"
+  cp -rfT "../staked-api.endpoints.webapp-220401.cloud.goog" "../${service_name}"
 
   # Copy the Example Page to the Guides folder
   cp "script_data/Example Page.md" "../${service_name}/Guides/"
