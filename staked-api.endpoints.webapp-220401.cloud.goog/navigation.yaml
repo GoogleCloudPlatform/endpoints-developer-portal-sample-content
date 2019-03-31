@@ -36,5 +36,6 @@ folders:
     # The add_example_page script will add a page named 'Example Page' here.
     ordering:
     - Getting Started
+    - Workflow Diagram
     - Dash Masternode
     - Tezos Baker
