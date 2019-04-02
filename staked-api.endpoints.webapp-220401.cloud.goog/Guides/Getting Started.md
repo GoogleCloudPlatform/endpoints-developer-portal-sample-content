@@ -9,19 +9,17 @@ Partners will typically interact with Staked in two ways:
 The staking process generally uses the following workflow:
 
 1. Register as an integration partner
-2. Register a delegation on a chain (address or txn_id, depending on chain)
-3. Check status (some chains use pre-provisioned infrastructure, others dynamically provision) until ready.
+2. Depending on the chain, execute some pre-requisites, then register a delegation on a chain.
+3. If `status` in the Response not immediately `READY`, pol the delegation status until `READY` (few chains require this).
 4. Sign delegation message and (optionally)
   * Submit directly to chain.
   * Submit signed message to Staked for chain submission.
-5. Pull reporting for a address, chain, or partner portfolio.
+5. Pull reporting for an address, chain, or partner portfolio.
 6. Undelegate
 
-A more detailed description and diagram available here: [flow diagram](Diagram.md)
+A more detailed description and diagram available here: [flow diagram](Workflow&#32;Diagram)
 
 # Next Steps / Getting Started
-* [Developer Portal (for API Keys and Docs)](https://endpointsportal.webapp-220401.cloud.goog/)
-* [Launch a Dash Masternode](/Guides/Dash&#32;Masternode)
-* [Launch a Tezos Baker](Tezos&#32;Baker.md)
-* Chain Links (for SDKs, CLIs, etc.)
-
+* [Developer Portal (for API Keys and Docs)](https://developer.staked.cloud/)
+* [Launch a Dash Masternode](Dash&#32;Masternode)
+* [Launch a Tezos Baker](Tezos&#32;Baker)
