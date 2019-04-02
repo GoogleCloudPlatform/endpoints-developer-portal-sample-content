@@ -17,11 +17,11 @@ The staking process generally uses the following workflow:
 5. Pull reporting for a address, chain, or partner portfolio.
 6. Undelegate
 
-A more detailed description and diagram available here: [flow diagram](FLOW_DIAGRAM.md)
+A more detailed description and diagram available here: [flow diagram](Diagram.md)
 
 # Next Steps / Getting Started
 * [Developer Portal (for API Keys and Docs)](https://endpointsportal.webapp-220401.cloud.goog/)
-* [Launch a Dash Masternode](chaindocs/DASH_STAKING.md)
-* [Launch a Tezos Baker](chaindocs/DASH_STAKING.md)
+* [Launch a Dash Masternode](/Guides/Dash&#32;Masternode)
+* [Launch a Tezos Baker](Tezos&#32;Baker.md)
 * Chain Links (for SDKs, CLIs, etc.)
 

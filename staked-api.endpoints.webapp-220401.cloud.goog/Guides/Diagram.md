@@ -1,4 +1,4 @@
-![Flow Diagram](/flow_diagram.png "Flow Diagram")
+![Flow Diagram](/images/flow_diagram.png "Flow Diagram")
 1. Custodian requests API Key and Registers in Staked API/DB
 2. End user initiates intent to delegate, Custodian relays intent via /delegate to Staked API.  In most chains, API immediately responds with detailed txn parameters/cli invocation and "READY" status.
   * For chains which require "Dynamic Node Provisioning", a request to Staked's Kube cluster.  If the Chain Specific Dynamic Provisioning Process can be achieved in a TIMEOUT time, an immediate response is generated and the Staked API returns txn params and READY state.  Otherwise, a PENDING state is returned.
