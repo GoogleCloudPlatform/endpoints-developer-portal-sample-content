@@ -1,42 +1,126 @@
 # Using Staked's APIs to launch Dash Masternodes
 
-## Step 1: Pre-requisites
-You will need an API key to access Staked's APIs. If you don't already have an API key, contact Staked to request one. For Dash, we will support 2 masternodes per partner account in a sandbox/tesnet environment.
+## Step 0: Pre-requisites
+In order to set up a you'll need to use a Dash faucet to obtain enough DASH to create an address with exactly 1000 Dash and get a Masternode txn_id (link to Dash instructions for this).
 
-Additionally, you'll need to use a Dash faucet to obtain enough DASH to create an address with exactly 1000 Dash and get a Masternode txn_id (link to Dash instructions for this).
-
-There are several testnet faucets: 
- * http://test.faucet.masternode.io 
+There are several testnet faucets:
+ * http://test.faucet.masternode.io
  * http://faucet.test.dash.crowdnode.io
  * https://test.faucet.dashninja.pl
+
+ All instructions in this step assume you are using either the dash command line tool or the debug console in the GUI wallet. If you are using the debug console, remove `dash-cli` from the beggining of each command mentioned below.
+
+ * Create two new addresses, the first to hold your masternode collateral and the second to serve as your owner address
+ You can create addresses using the following command:
+
+ `dash-cli getnewaddress <address-alias>`
+
+ Example
+
+ `dash-cli getnewaddress masternode_1_owner`
+
+ * Send exactly 1,000 Dash to your collateral address
+
+ `dash-cli sendtoaddress <address> <amount>`
+
+ Example
+
+ `dash-cli sendtoaddress XkGe5utNkxXzsCHtDAXEXRBHXouHamYHBB 1000`
+
+ * Get the transaction id and output index of the transaciton you just created (you may need to wait up to 2 minutes until your transaction is added to a block).
+
+ `dash-cli masternode outputs`
+
+ Which looks like this:
+
+ ```
+ {
+   "8960321b0c43a51e35d0226debfc117ae22856c1710af855e7997e3aa9b4ed82": "1",
+  "053c79483f8b5eab7f53175d3a26dc45c295e3ac213f188237d40f2cd2f84da9": "1",
+  "370820cef360f0d383200d1d72e6886aaaf16a114b209c4344a866b920c506d1": "1"
+  }
+  ```
+
+ * (Optional) if you want to vote using a different address than your owner address, create a third address using the commands in step 0.1
+
+
+## Step 1: API key
+You will need an API key to access Staked's APIs. If you don't already have an API key, contact Staked to request one. For Dash, we will support 2 masternodes per partner account in a sandbox/tesnet environment.
 
 ## Step 2: Delegate Assets
 - Use the `delegate` endpoint to register a new masternode address. [Documentation]()
 - Shell example:
-  - `curl -X POST -H "content-type:application/json" -d '{"address": "KT1.....", "amount": "1000.0", "txn_id": ""], "user_id": "PARNTERID"}' "http://testnet.api.staked.cloud/chain/DASH/delegate?key=AIzaSyDP2E-04AmxEyQCCyl_xPcNVaVqZPJHwl4"`
-  - response will be a GUID from Staked for that address and a status (for DASH, the initial status will be "CREATING").
+  - `curl -X POST -H "content-type:application/json"
+    -d '{
+      "address": "XkGe5utNkxXzsCHtDAXEXRBHXouHamYHBB", "chain": "DASH",
+      "attributes": {
+        "collateralHash": "8960321b0c43a51e35d0226debfc117ae22856c1710af855e7997e3aa9b4ed82",
+        "collateralIndex": 1}}'
+        "http://testnet.staked.cloud/api/delegations?key=YOURAPIKEY"`
+  - response will be a Delegation object with attributes and a status ("PENDING" or "READY").
 
 ## Step 3: Check Masternode Status
 - Use the `address` endpoint to check the status of your new masternode. [Documentation]()
-- What are possible status responses? 
+- What are possible status responses?
 - Shell example:
-  - `curl -X GET "http://testnet.api.staked.cloud/chain/DASH/address/ADDRESS?key=AIzaSyDP2E-04AmxEyQCCyl_xPcNVaVqZPJHwl4"`
-  - response is structure for the "1000 Dash" address and the status of the underlying Masternode, and other attributes of the Masternode.  When the masternode is ready for launch, we will return a status of "SUBMIT". The response will also contain the launch message that needs to be signed.
+  - `curl -X GET "http://testnet.staked.cloud/api/delegations/XkGe5utNkxXzsCHtDAXEXRBHXouHamYHBB?key=YOURAPIKEY"`
+  - response will be a Delegation object with attributes and a status ("PENDING" or "READY").  When the `status` is `READY`, the `attributes` for the masternode address will include the necessary parameters (https://developer.staked.cloud/docs/testnet.staked.cloud/1/types/dash_attrs) to perform the on chain commands in the next step.
 
-## Step 4: Sign Delegation Message
-- Provide link to Dash documentation for signing the message.
-- The API caller can either submit the message directly to the chain (assuming they are running a fully synched node in their wallet or SDK environment), or provide us with the signed message and we will submit it.
-- API call to submit the signed txn
-  - `curl -X PUT -H "content-type:application/json" -d '{"signed_txn": "SIGNED_TRANSACTION_STRING"}' "http://testnet.api.staked.cloud/chain/DASH/address/ADDRESS?key=AIzaSyDP2E-04AmxEyQCCyl_xPcNVaVqZPJHwl4"`
+## Step 4: Register Masternode and Sign Delegation Message
+Info Needed from previous Steps:
+```
+1. collateralHash: The txid of the 1000 Dash collateral funding transaction
+2. collateralIndex: The output index of the 1000 Dash funding transaction
+3. ipAndPort: Masternode IP address and port, in the format x.x.x.x:yyyy
+4. ownerKeyAddr: The new Dash address generated above for the owner/voting address
+5. operatorPubKey: The BLS public key generated above (or provided by your hosting service)
+6. votingKeyAddr: The new Dash address generated above, or the address of a delegate, used for proposal voting
+7. operatorReward: The percentage of the block reward allocated to the operator as payment
+8. payoutAddress: A new or existing Dash address to receive the owner’s masternode rewards
+9. feeSourceAddress: An (optional) address used to fund ProTx fee. payoutAddress will be used if not specified.
+```
+Notes:
+* collateralHash(1), collateralIndex(2), and ownerKeyAddr(4) are obtained in step 0.
+* ipAndPort(3) and operatorPubKey(5) are generated by Staked and returned in this step 2/3.
+* votingKeyAddr(6) is usually set to ownerAddress(4) but can be any address user wants.
+* operatorReward(7) is 10
+* payoutAddress(8) can be any address user for holding the rewards.
+* After the registration/submission transaction, staked will update it's operator Payout Address on the backend.
+
+1. Using the values from the previous steps, you must run `register_prepare` on a wallet that holds the private key for `ownerKeyAddress`, and must be online as the chain is accessed in this step.
+```
+protx register_prepare collateralHash collateralIndex ipAndPort ownerKeyAddr operatorPubKey votingKeyAddr operatorReward payoutAddress (feeSourceAddress)
+```
+Example Response:
+```
+{
+   "tx": "0300010001784e3.....0bb4ceb9c00",
+  "collateralAddress": "yiFfzbwiN9oneftd7cEfr3kQLRwQ4kp7ue",
+  "signMessage": "yLqyR8PHEB7Fp1ue8nSuLfux......fc4b3f75c8a5503"
+}
+
+```
+2. User signs message. This must be run on wallet/device that holds collateral key. This can be done completely offline (for example, if the user holds collateral keys in a ledger), and the `signMessage` is the output from above.
+```
+signmessage collateralAddress signMessage
+```
+Example Response:
+```
+H3ub9BATtvuV+zDGdkUQNoUGpaYFr/O1FypmrSmH5WJ0KFRi8T10FSew0EJO/+Ij+OLv4r0rt+HS9pQFsZgc2dE=
+```
+
+3. Someone submits the transaction with `protx register_submit tx sig`
+```
+protx register_submit 0303242......9c00 H3ub9BATtvuV+zDGdkUQNo.....0EJO/+Ij+OLv4r0rt+HS9pQFsZgc2dE=
+```
+tx: The tx returned from `register_prepare` in step 4.1.
+sig: The response from `signmessage` in step 4.2
 
 ## Step 5: Access Reporting
-- Use the `report` endpoint to access reporting. [Documentation]() You can request reporting on all Dash accounts or a single address:
-  - `curl -X GET "http://testnet.api.staked.cloud/chain/DASH/report?key=AIzaSyDP2E-04AmxEyQCCyl_xPcNVaVqZPJHwl4"`
-  - `curl -X GET "http://testnet.api.staked.cloud/chain/DASH/address/ADDRESS/report?key=AIzaSyDP2E-04AmxEyQCCyl_xPcNVaVqZPJHwl4"`
+- Use the `reports` endpoint to access reporting. [Documentation]() You can request reporting on all Dash accounts or a single address:
 
 ## Step 6: Unbonding
+The masternode can be shutdown on the backend with a DELETE call on the ownerAddress
 
-All good things come to an end. At some point, the customer may want to unbond (a.k.a Stop staking), allowing them to transfer or sell their currency.
 - API call to submit the signed txn
-  - `curl -X DELETE -H "content-type:application/json" -d '{"signed_txn": "SIGNED_TRANSACTION_STRING"}' "http://testnet.api.staked.cloud/chain/DASH/address/ADDRESS?key=AIzaSyDP2E-04AmxEyQCCyl_xPcNVaVqZPJHwl4"`
-  - TODO: Do we want a DELETE or a POST to undelegate?
+  - `curl -X DELETE -H "content-type:application/json"  "http://testnet.staked.cloud/api/delegations/XkGe5utNkxXzsCHtDAXEXRBHXouHamYHBB?key=YOURAPIKEY"`

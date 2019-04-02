@@ -1,9 +1,0 @@
-![Flow Diagram](/images/flow_diagram.png "Flow Diagram")
-1. Custodian requests API Key and Registers in Staked API/DB
-2. End user initiates intent to delegate, Custodian relays intent via /delegate to Staked API.  In most chains, API immediately responds with detailed txn parameters/cli invocation and "READY" status.
-  * For chains which require "Dynamic Node Provisioning", a request to Staked's Kube cluster.  If the Chain Specific Dynamic Provisioning Process can be achieved in a TIMEOUT time, an immediate response is generated and the Staked API returns txn params and READY state.  Otherwise, a PENDING state is returned.
-2. For delegation requests that were PENDING, the Custodian is responsible for Polling the Staked REST Service for Status updates.  Note that we could support callbacks to Custodians with their own microservices listening on callback URLs.
-3. Staked Dynamic Node Creation will call back to STaked REST Service/DB on completion to READY or FAILED a Dynamic Node Provisioning.  A polling job on the cluster will check for PROCESSING requests that may have crashed durning provisioning, and these crashes will be logged and alerted.
-4. When the response of the Custodian poll request is READY, the txn parameters will be signed and submitted directly to the chain by the Custodian.  Appropriate Dynamic Nodes (or Static Nodes) will then be able to validate on the Network on behalf of the Delegator.
-5. Subsequently, the End User or Custodian may want to view reports.  Chain specific reports (either JSON responses or signed urls to Cloud Storage buckets for CSV dumps) can be supported.
-6. End users can undelegate partially (for Static Node Chains) without an Staked infrastructure changes, however, Staked's API can provide the parameters needed to undelegate on demand.  Complete undelegations should be recorded, as well as those for Dynamic Node Chains so that de-provisioning can be initiated.
