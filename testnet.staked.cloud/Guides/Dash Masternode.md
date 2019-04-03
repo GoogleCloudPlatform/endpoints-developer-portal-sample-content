@@ -8,7 +8,7 @@ There are several testnet faucets:
  * http://faucet.test.dash.crowdnode.io
  * https://test.faucet.dashninja.pl
 
- All instructions in this step assume you are using either the dash command line tool or the debug console in the GUI wallet. If you are using the debug console, remove `dash-cli` from the beggining of each command mentioned below.
+ All instructions in this step assume you are using either the dash command line tool or the debug console in the GUI wallet. If you are using the debug console, remove `dash-cli` from the begining of each command mentioned below.
 
  * Create two new addresses, the first to hold your masternode collateral and the second to serve as your owner address
  You can create addresses using the following command:
@@ -60,11 +60,11 @@ You will need an API key to access Staked's APIs. If you don't already have an A
   - response will be a Delegation object with attributes and a status ("PENDING" or "READY").
 
 ## Step 3: Check Masternode Status
-- Use the `address` endpoint to check the status of your new masternode. [Documentation]()
+- Use the `delegation` endpoint with the address parameter to check the status of your new masternode. [api docs here](https://developer.staked.cloud/docs/testnet.staked.cloud/1/routes/delegations/get)
 - What are possible status responses?
 - Shell example:
   - `curl -X GET "http://testnet.staked.cloud/api/delegations/XkGe5utNkxXzsCHtDAXEXRBHXouHamYHBB?key=YOURAPIKEY"`
-  - response will be a Delegation object with attributes and a status ("PENDING" or "READY").  When the `status` is `READY`, the `attributes` for the masternode address will include the necessary parameters (https://developer.staked.cloud/docs/testnet.staked.cloud/1/types/dash_attrs) to perform the on chain commands in the next step.
+  - response will be a Delegation object with attributes and a status ("PENDING" or "READY").  When the `status` is `READY`, the `attributes` for the masternode address will include the necessary parameters [api docs here](https://developer.staked.cloud/docs/testnet.staked.cloud/1/types/dash_attrs) to perform the on chain commands in the next step.
 
 ## Step 4: Register Masternode and Sign Delegation Message
 Info Needed from previous Steps:
@@ -117,10 +117,14 @@ tx: The tx returned from `register_prepare` in step 4.1.
 sig: The response from `signmessage` in step 4.2
 
 ## Step 5: Access Reporting
-- Use the `reports` endpoint to access reporting. [Documentation]() You can request reporting on all Dash accounts or a single address:
+- Use the `reports` endpoint to access reporting. [api doc here](https://developer.staked.cloud/docs/testnet.staked.cloud/1/routes/reports/get) You can request reporting on all Dash accounts or a single address:
 
 ## Step 6: Unbonding
 The masternode can be shutdown on the backend with a DELETE call on the ownerAddress
 
 - API call to submit the signed txn
   - `curl -X DELETE -H "content-type:application/json"  "http://testnet.staked.cloud/api/delegations/XkGe5utNkxXzsCHtDAXEXRBHXouHamYHBB?key=YOURAPIKEY"`
+
+## References
+[Dash CLI](https://docs.dash.org/en/stable/wallets/dashcore/cmd-rpc.html#dash-cli)
+[Dash Core Docs](https://docs.dash.org/en/stable/masternodes/setup.html?highlight=register_prepare#prepare-a-proregtx-transaction)

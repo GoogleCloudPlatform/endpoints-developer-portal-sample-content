@@ -22,4 +22,3 @@ A more detailed description and diagram available here: [flow diagram](Workflow&
 # Next Steps / Getting Started
 * [Developer Portal (for API Keys and Docs)](https://developer.staked.cloud/)
 * [Launch a Dash Masternode](Dash&#32;Masternode)
-* [Launch a Tezos Baker](Tezos&#32;Baker)
