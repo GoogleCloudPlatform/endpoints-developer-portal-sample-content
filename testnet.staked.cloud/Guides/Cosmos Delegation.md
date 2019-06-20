@@ -16,44 +16,49 @@ You will need an API key to access Staked's APIs. If you don't already have an A
 - Shell example:
 
   ```bash
-    $ curl -X POST -H "content-type:application/json" -d '{"amount": 1"}' "http://testnet.staked.cloud/api/delegations/COSMOS/delegator/cosmos1scdqxnwvhng5nhzfeptgtu57nh48mc5hymd5sk?api_key=<YOURAPIKEY>"
+    $ curl -X POST -H "content-type:application/json" -d '{"amount": 100"}' "http://testnet.staked.cloud/api/delegations/COSMOS/delegator/cosmos1scdqxnwvhng5nhzfeptgtu57nh48mc5hymd5sk?api_key=<YOURAPIKEY>"
   ```
 
   - Response will be a Delegation object with attributes, including a txn to sign, like:
   
   ```json
   {
-    "chain-id": "gaia-13003",
-    "status": "CREATED",
-    "txnToSign": {
-      "type": "auth/StdTx",
-      "value": {
-        "msg": [
-          {
-            "type": "cosmos-sdk/MsgDelegate",
-            "value": {
-              "delegator_address": "cosmos18vspjrcxgq66spd5c4s42eg8v7u20wquqs7faw",
-              "validator_address": "cosmosvaloper18vspjrcxgq66spd5c4s42eg8v7u20wqu9y2u3a",
-              "amount": {
-                "denom":"atom",
-                "amount":"1"
-              }
-            }
-          }
-        ],
+    "id": "<id>",
+    "address": "gaia-cosmos1scdqxnwvhng5nhzfeptgtu57nh48mc5hymd5sk",
+    "chain": "COSMOS",
+    "attributes": {
+      "tx": {
         "fee": {
+          "gas": "99429",
           "amount": [
             {
               "denom": "uatom",
               "amount": "1000"
             }
-          ],
-          "gas": "19690"
+          ]
         },
-        "signatures": null,
-        "memo": "Delegation txn created by Staked: <timestamp>"
-      }
-    }
+        "msg": [
+          {
+            "type": "cosmos-sdk/MsgDelegate",
+            "value": {
+              "amount": {
+                "denom": "atom",
+                "amount": "100"
+              },
+              "delegator_address": "cosmos1scdqxnwvhng5nhzfeptgtu57nh48mc5hymd5sk",
+              "validator_address": "cosmosvaloper18vspjrcxgq66spd5c4s42eg8v7u20wqu9y2u3a"
+            }
+          }
+        ],
+        "memo": "Delegation txn created by Staked: <timestamp>",
+        "signatures": null
+      },
+      "type": "auth/StdTx",
+      "chain_id": "gaia-13003"
+    },
+    "amount": "100",
+    "created": "<timestamp>",
+    "status": "CREATED"
   }
   ```
 
