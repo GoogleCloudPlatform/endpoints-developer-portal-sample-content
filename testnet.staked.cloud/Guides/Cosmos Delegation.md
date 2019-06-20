@@ -16,7 +16,7 @@ You will need an API key to access Staked's APIs. If you don't already have an A
 - Shell example:
 
   ```bash
-    $ curl -X POST -H "content-type:application/json" -d '{"amount": 100"}' "http://testnet.staked.cloud/api/delegations/COSMOS/delegator/cosmos1scdqxnwvhng5nhzfeptgtu57nh48mc5hymd5sk?api_key=<YOURAPIKEY>"
+    $ curl -X POST -H "content-type:application/json" -d '{"amount": "100"}' "http://testnet.staked.cloud/api/delegations/COSMOS/delegator/cosmos1scdqxnwvhng5nhzfeptgtu57nh48mc5hymd5sk?api_key=<YOURAPIKEY>"
   ```
 
   - Response will be a Delegation object with attributes, including a txn to sign, like:
@@ -65,13 +65,20 @@ You will need an API key to access Staked's APIs. If you don't already have an A
 ## Step 3: Sign the Transaction with Your Private Key
 
 - Assumes `gaiacli` and that you have `--recover` a key with the alias `MyKey`
-- With the txn json from above in a file `txn_to_sign.json`, run the following:
+- With the json from above, copy `attributes` into a file `txn_to_sign.json`. Then, rename `attributes` to `txnToSign`.
+- -*OR*-
+- If you prefer to use `jq`, you can pipe the curl command into jq like:  
+
+  ```bash
+  $ curl ... | jq ' {txnToSign: .attributes} ' > txn_to_sign.json
+  ```
+
+- With `txn_to_sign.json`, run the following with `chain-id` from the POST response:  
 
   ```bash
   $ gaiacli tx sign delegate_to_sign.json --from=MyKey --chain-id=gaia-13003
   ```
 
-  - `chain-id` is what was returned from the POST to delegations
 - The output will be a nearly identical json as the input, but including signatures:
 
 ```json
@@ -92,7 +99,7 @@ You will need an API key to access Staked's APIs. If you don't already have an A
 
 ## Step 4: PUT Signed Transaction to the Delegations Endpoint
 
-- Wrap the signedTx in a json attribute and PUT it
+- Wrap the signedTx in a json attribute and PUT it:
 
   ```bash
   $ curl -X PUT -H "content-type:application/json" -d '{"attributes": <SIGNED_OUTPUT>}' "http://testnet.staked.cloud/api/delegations/COSMOS/delegator/cosmos1scdqxnwvhng5nhzfeptgtu57nh48mc5hymd5sk?api_key=<YOURAPIKEY>"
