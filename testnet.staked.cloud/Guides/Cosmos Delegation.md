@@ -16,7 +16,7 @@ You will need an API key to access Staked's APIs. If you don't already have an A
 - Shell example:
 
   ```bash
-    $ curl -X POST -H "content-type:application/json" -d '{"amount": 1", "attributes": {"memo": "Staked delegation"}}' "http://testnet.staked.cloud/api/delegations/COSMOS/delegator/cosmos1scdqxnwvhng5nhzfeptgtu57nh48mc5hymd5sk?api_key=<YOURAPIKEY>"
+    $ curl -X POST -H "content-type:application/json" -d '{"amount": 1"}' "http://testnet.staked.cloud/api/delegations/COSMOS/delegator/cosmos1scdqxnwvhng5nhzfeptgtu57nh48mc5hymd5sk?api_key=<YOURAPIKEY>"
   ```
 
   - Response will be a Delegation object with attributes, including a txn to sign, like:
@@ -44,14 +44,14 @@ You will need an API key to access Staked's APIs. If you don't already have an A
         "fee": {
           "amount": [
             {
-              "denom": "muon",
+              "denom": "uatom",
               "amount": "1000"
             }
           ],
           "gas": "19690"
         },
         "signatures": null,
-        "memo": "Staked delegation"
+        "memo": "Delegation txn created by Staked: <timestamp>"
       }
     }
   }
