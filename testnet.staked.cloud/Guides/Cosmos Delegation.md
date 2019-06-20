@@ -73,7 +73,7 @@ You will need an API key to access Staked's APIs. If you don't already have an A
   $ curl ... | jq ' {txnToSign: .attributes} ' > txn_to_sign.json
   ```
 
-- With `txn_to_sign.json`, run the following with `chain-id` from the POST response:  
+- With `txn_to_sign.json`, run the following, with `chain-id` from the POST response:  
 
   ```bash
   $ gaiacli tx sign delegate_to_sign.json --from=MyKey --chain-id=gaia-13003
@@ -99,7 +99,7 @@ You will need an API key to access Staked's APIs. If you don't already have an A
 
 ## Step 4: PUT Signed Transaction to the Delegations Endpoint
 
-- Wrap the signedTx in a json attribute and PUT it:
+- Rewrap the signed tx in `attributes` and PUT it:
 
   ```bash
   $ curl -X PUT -H "content-type:application/json" -d '{"attributes": <SIGNED_OUTPUT>}' "http://testnet.staked.cloud/api/delegations/COSMOS/delegator/cosmos1scdqxnwvhng5nhzfeptgtu57nh48mc5hymd5sk?api_key=<YOURAPIKEY>"
