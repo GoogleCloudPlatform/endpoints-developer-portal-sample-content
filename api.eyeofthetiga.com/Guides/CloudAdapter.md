@@ -18,6 +18,10 @@
 | 0xD004         | trigger a connection attempt    | write       |
 | 0xD005         | connection status               | read,notify |
 
+#### TODO
+
+add settings defined here https://github.com/Plantiga/CloudAdapter/issues/206
+
 ### GATT API Key Service
 
 | Allocated UUID | Description     | Attributes  |
@@ -33,12 +37,21 @@
 
 #### WIFI Service
 
-##### 0xD001 network ssid
+If the emulator is started with --no-networks, then no networks will be shown for `0xD003` 
+network list of available ssids
+
 
 ##### 0xD003 network list
 
 Subscribe will notify for each network found, listener should handle duplicate networks.
 Will not notify if network is no longer available.
+
+The following networks will be presented
+
+* "Happy Path" - all passwords will work on this network
+* "Bad Password" - the after `0xD004` is set, then 0xD005 will always notify as `PASSWORD_ERROR`
+* "Bad Network" - the after `0xD004` is set, then 0xD005 will always notify as `CONNECTION_ERROR`
+* "Firewall" - the after `0xD004` is set, then 0xD005 will always notify as `NETWORK_ERROR`
 
 #####  0xD004 trigger a connection attempt
 
@@ -66,3 +79,24 @@ Possible Values: *TODO: define better*
 | 0xD102         | Api status      | read,notify |
 | 0xD103         | Team ID         | notify      |
 | 0xD104         | Team Name       | notify      |
+
+
+##### 0xD005 connection status
+
+# 0xD101 API Key
+
+* "my_team_key" - this wil be a good key team_name and team_id will be Foo, FooId
+* "bad_key" 
+
+TODO: define more values
+
+
+# 0xD102 Api status
+
+Possible Values: *TODO: define better*
+
+* `KEY_OK`
+* `NO_KEY`
+* `KEY_INVALID` - AHH!
+* `CONNECTION_TIMEOUT` 
+* `CONNECTION_ERROR`
