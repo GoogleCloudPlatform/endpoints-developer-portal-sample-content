@@ -27,13 +27,22 @@ add settings defined here https://github.com/Plantiga/CloudAdapter/issues/206
 ## 0xD000 WIFI Service
 
 If the emulator is started with --no-networks, then no networks will be shown for `0xD003` 
-network list of available ssids
+network list of available ssids.
+
+Writing the `0xD001` and `0xD002` characteristics will not be enough to start a network connection attempt, `0xD004` should be written to to trigger a network connection attempt. 
 <br>
 
 ## 0xD001 Network SSID
+| Defined Submissions | Description                                                                    |
+| ------------------- | ------------------------------------------------------------------------------ |
+| `"Happy Path"`      | All passwords work on this network, `0xD005` will always notify as `CONNECTED` |
+| `"Bad Password"`    | After `0xD004` is set, then `0xD005` will always notify as `PASSWORD_ERROR`    |
+| `"Bad Network"`     | After `0xD004` is set, then 0xD005 will always notify as `CONNECTION_ERROR`    |
+| `"Firewall"`        | After `0xD004` is set, then 0xD005 will always notify as `NETWORK_ERROR`       |
 <br>
 
 ## 0xD002 Password
+Password behaviour for the emulator is defined based on the `0xD001` service
 <br>
 
 ## 0xD003 Network List
@@ -50,7 +59,7 @@ The following networks will be presented
 
 #####  0xD004 Trigger a Connection Attempt
 
-write any value to start a connection
+Write any value to start a connection
 <br>
 
 ##### 0xD005 Connection Status
