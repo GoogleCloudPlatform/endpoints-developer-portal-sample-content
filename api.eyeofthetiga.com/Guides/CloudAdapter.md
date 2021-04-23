@@ -71,10 +71,10 @@ Get or watch the connection status
 Possible Values: *TODO: define better*
 
 * `NOT_CONNECTED` *
-* `CONNECTING` * waiting for connection
-* `CONNECTION_ERROR` * can not connect to the wifi
-* `PASSWORD_ERROR` * user password was incorrect
-* `NETWORK_ERROR` * connected, but there is
+* `CONNECTING` * establishing connection
+* `CONNECTION_ERROR` * can not connect to the wifi network
+* `PASSWORD_ERROR` * user password was incorrect -- (need to figure out how to find this from wpa_cli)
+* `NETWORK_ERROR` * connected to network, but there is an issue connecting to internet
 * `CONNECTED` * all good
 <br><br>
 
