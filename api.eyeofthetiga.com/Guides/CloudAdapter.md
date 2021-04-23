@@ -66,7 +66,7 @@ Possible Values: *TODO: define better*
 * `NOT_CONNECTED` *
 * `CONNECTING` * waiting for connection
 * `CONNECTION_ERROR` * can not connect to the wifi
-* `PASSWORD_ERROR` * user password was incorrect -- need to determine how to get this from wpa_cli
+* `PASSWORD_ERROR` * user password was incorrect
 * `NETWORK_ERROR` * connected, but there is
 * `CONNECTED` * all good
 
@@ -96,7 +96,10 @@ Possible Values: *TODO: define better*
 
 Possible Values: *TODO: define better*
 
-* `KEY_OK`
-* `NO_KEY`
-* `KEY_INVALID` - AHH!
-* `CONNECTION_TIMEOUT` 
+| Possible Values      | Description                                                                            |
+| -------------------- | -------------------------------------------------------------------------------------- |
+| `NO_KEY`             | `0xD101` has not been written to                                                       |
+| `KEY_OK`             | `0xD101` is valid                                                                      |
+| `KEY_INVALID`        | `0xD101` is invalid                                                                    |
+| `CONNECTION_TIMEOUT` | `0xD101` may be correct, but there was a network error when attempting to authenticate |
+
