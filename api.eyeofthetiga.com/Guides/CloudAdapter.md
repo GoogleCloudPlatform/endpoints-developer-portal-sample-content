@@ -48,21 +48,23 @@ Password behaviour for the emulator is defined based on the `0xD001` service
 ## 0xD003 Network List
 
 Subscribe will notify for each network found, listener should handle duplicate networks.
+
 Will not notify if network is no longer available.
 
 The following networks will be presented
 
-* "Happy Path" - all passwords will work on this network
-* "Bad Password" - the after `0xD004` is set, then 0xD005 will always notify as `PASSWORD_ERROR`
-* "Bad Network" - the after `0xD004` is set, then 0xD005 will always notify as `CONNECTION_ERROR`
-* "Firewall" - the after `0xD004` is set, then 0xD005 will always notify as `NETWORK_ERROR`
+* `"Happy Path"`
+* `"Bad Password"`
+* `"Bad Network"`
+* `"Firewall"`
+<br>
 
-#####  0xD004 Trigger a Connection Attempt
+##  0xD004 Trigger a Connection Attempt
 
 Write any value to start a connection
 <br>
 
-##### 0xD005 Connection Status
+## 0xD005 Connection Status
 
 Get or watch the connection status
 
