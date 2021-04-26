@@ -51,26 +51,41 @@ Subscribe will notify for each network found, listener should handle duplicate n
 
 Will not notify if network is no longer available.
 
-The following networks will be presented
-
+The following networks will be presented:
 * `"Happy Path"`
 * `"Bad Password"`
 * `"Bad Network"`
 * `"Firewall"`
+* `"Duplicate Network"`
+* `"Duplicate Network"`
 <br>
 
 ##  0xD004 Trigger a Connection Attempt
 
 Write any value to start a connection
+| Defined Submissions           | Description                                                                      | Behaviour of other Characteristics                                                                            |
+| ----------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `"connect"` or anything else            | A value written to tigger a connection                                                                      | see `0xD001`|
 <br>
 
 ## 0xD005 Connection Status
 
 Get or watch the connection status
 
-Possible Values: *TODO: define better*
+|Defined Values|Description|
+|--------------|-----------|
+|`WPA_DISCONNECTED`| This state indicates that client is not associated, but is likely to start looking for an access point. This state is entered when a connection is lost.|
+|`WPA_INACTIVE`| This state is entered if there are no enabled networks in the configuration. wpa_supplicant is not trying to associate with a new network and external interaction (e.g., ctrl_iface call to add or enable a network) is needed to start association.|
+|`WPA_SCANNING`| This state is entered when wpa_supplicant starts scanning for a network.|
+|`WPA_ASSOCIATING`| This state is entered when wpa_supplicant has found a suitable BSS to associate with and the driver is configured to try to associate with this BSS in ap_scan=1 mode. When using ap_scan=2 mode, this state is entered when the driver is configured to try to associate with a network using the configured SSID and security policy.|
+|`WPA_ASSOCIATED`| This state is entered when the driver reports that association hasbeen successfully completed with an AP. If IEEE 802.1X is used(with or without WPA/WPA2), wpa_supplicant remains in this stateuntil the IEEE 802.1X/EAPOL authentication has been completed.|
+|`WPA_4WAY_HANDSHAKE`|This state is entered when WPA/WPA2 4-Way Handshake is started. Incase of WPA-PSK, this happens when receiving the first EAPOL-Keyframe after association. In case of WPA-EAP, this state is enteredwhen the IEEE 802.1X/EAPOL authentication has been completed.|
+|`WPA_GROUP_HANDSHAKE`| This state is entered when 4-Way Key Handshake has been completed (i.e., when the supplicant sends out message 4/4) and when Group Key rekeying is started by the AP (i.e., when supplicant receives message 1/2).|
+|`WPA_COMPLETED`|This state is entered when the full authentication process iscompleted. In case of WPA2, this happens when the 4-Way Handshake issuccessfully completed. With WPA, this state is entered after theGroup Key Handshake; with IEEE 802.1X (non-WPA) connection iscompleted after dynamic keys are received (or if not used, afterthe EAP authentication has been completed). With static WEP keys andplaintext connections, this state is entered when an associationhas been completed.This state indicates that the supplicant has completed itsprocessing for the association phase and that data connection isfully configured.|
 
-* `NOT_CONNECTED` *
+
+Possible Values: *TODO: define our wrapper values *
+
 * `CONNECTING` * establishing connection
 * `CONNECTION_ERROR` * can not connect to the wifi network
 * `PASSWORD_ERROR` * user password was incorrect -- (need to figure out how to find this from wpa_cli)
