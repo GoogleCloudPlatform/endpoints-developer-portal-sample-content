@@ -2,7 +2,7 @@
 
 ## Development Flow 
 
-1. Setup your rasbperry as explained in the [secton below](https://github.com/Plantiga/endpoints-developer-portal/blob/srossross-patch-2/api.eyeofthetiga.com/Guides/Getting%20Started.md#setting-up-the-rasbperry-pi) This step is only required once
+1. Setup your Rasbperry Pi as explained in the [secton below](https://github.com/Plantiga/endpoints-developer-portal/blob/srossross-patch-2/api.eyeofthetiga.com/Guides/Getting%20Started.md#setting-up-the-rasbperry-pi). This step is only required once
 2. Before you want to connect the application, you must [run the emulator on the pi](https://github.com/Plantiga/endpoints-developer-portal/blob/srossross-patch-2/api.eyeofthetiga.com/Guides/Getting%20Started.md#install-and-run-the-base-station-emulator)
 3. To test that the emulator is working you can use a mobile tool like:
     * [LightBlue](https://punchthrough.com/lightblue/) for mobile
@@ -27,7 +27,7 @@ To complete a basestation setup you must perform the following steps with the BL
 1. Check the API status `0xD102` for `KEY_OK`
 
 
-## Setting up the Rasbperry PI 
+## Setting up the Rasbperry Pi 
 
 The Base Station Emulator is intended to be run on a Raspberry Pi running the [Raspberry Pi OS Lite](https://www.raspberrypi.org/software/operating-systems/).
 
