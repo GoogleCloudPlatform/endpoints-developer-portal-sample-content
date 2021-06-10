@@ -1,31 +1,35 @@
 # Getting Started
----
 
-### Before you begin
-1. Create a new [Cloud Platform project](https://console.developers.google.com/projectcreate).
-2. [Enable billing](https://cloud.google.com/billing/docs/how-to/modify-project#enable_billing_for_a_project) for your project.
+## Development Flow 
 
-### Creating an API key
-1. [Create an API key](https://console.developers.google.com/apis/credentials) in the Google APIs Console.
-2. Click **Create credentials**, then select **API key**.
-3. Copy the key to the clipboard.
-4. Click **Close**.
+1. Setup your Rasbperry Pi as explained in the [secton below](https://github.com/Plantiga/endpoints-developer-portal/blob/srossross-patch-2/api.eyeofthetiga.com/Guides/Getting%20Started.md#setting-up-the-rasbperry-pi). This step is only required once
+2. Before you want to connect the application, you must [run the emulator on the pi](https://github.com/Plantiga/endpoints-developer-portal/blob/srossross-patch-2/api.eyeofthetiga.com/Guides/Getting%20Started.md#install-and-run-the-base-station-emulator)
+3. To test that the emulator is working you can use a mobile tool like:
+    * [LightBlue](https://punchthrough.com/lightblue/) for mobile
+    * [BlueSee](https://www.synapse.com/bluesee) for mac desktop
+4. You should be able to get and set the GATT characteristics as documented in our [API documentation](https://endpointsportal.plantiga-dev.cloud.goog/docs/api.eyeofthetiga.com/1/c/Guides/BaseStation)
 
-### Enable the API
+## Setup Flow 
 
-Before you can make calls to this API, you need to enable it in the Cloud Platform project you created.
-1. [View this API](https://console.developers.google.com/apis/api/{{apiHost}}/overview) in the Google APIs Console.
-2. Click the **Enable** button, then wait for it to complete.
-3. You can now call the API using the API key you created!
+To complete a basestation setup you must perform the following steps with the BLE API:
 
-### Using the API
+### 1. WIFI SERVICE `0xD000`
 
-Browse the reference section of this site to see examples of what you can do with this API and how to use it. You can use the **Try this API** tool on the right side of an API method page to generate a sample request.
+1. Set the SSID Characteristic `0xD001`
+2. Set the Password Characteristic `0xD002`
+3. Set the Connect Characteristic `0xD004`
+4. Check the status `0xD005` for `CONNECTED`
 
-### Setting up the Cloud Adapter Emulator
+### 2. API SERVICE `0xD100`
+
+1. Get the API key by exchanging a `firebase id token` with a `cloud-adapter-token` using our API [/cloud-gears/cloud-adapter-token](https://endpointsportal.plantiga-dev.cloud.goog/docs/api.eyeofthetiga.com/1/routes/cloud-gears/cloud-adapter-token/get)
+1. Set the API key `0xD101` 
+1. Check the API status `0xD102` for `KEY_OK`
 
 
-The Cloud Adapter Emulator is intended to be run on a Raspberry Pi running the [Raspberry Pi OS Lite](https://www.raspberrypi.org/software/operating-systems/).
+## Setting up the Rasbperry Pi 
+
+The Base Station Emulator is intended to be run on a Raspberry Pi running the [Raspberry Pi OS Lite](https://www.raspberrypi.org/software/operating-systems/).
 
 1. Download the OS zip, extract its image file, and use a tool like [Balena Etcher](https://www.balena.io/etcher/) to flash the image onto a microSD card. 
 2. If you would like to configure the system via a USB Keyboard and HDMI, skip to `step 5`.
@@ -44,10 +48,13 @@ The Cloud Adapter Emulator is intended to be run on a Raspberry Pi running the [
 5. Plug in the microSD card to the Raspberry Pi and plug in the power, allowing up to 5 minutes for the Pi to boot for the first time. The default username is: `pi` and its password is: `raspberry`.
    1. If you are logging in via the tty using Keyboard and HDMI, use `wpa_cli` to configure the wifi, create the file from `step 4` in the location `/etc/wpa_supplicant/wpa_supplicant.conf` and reboot or restart the `wpa_supplicant.service`, or use an ethernet cable to connect to the internet.
    2. If you used `step 3` and `step 4` to set up your Pi, you can connect via ssh (if you are on the same network) using the hostname: `raspberrypi.local`.
-6. Download the latest version of the Emulator binary using the command 
+
+## Install and run the Base Station Emulator
+
+1. Download the latest version of the Emulator binary using the command 
    
    `wget https://storage.googleapis.com/plantiga-prod-downloads/SmartDockBLE/2021.05.12%2B85c69a0/plantiga-ble-emulator`
 
    and use `chmod +x plantiga-ble-emulator` to make it executable.
-7. Disable the Linux bluetooth service with `sudo systemctl disable bluetooth.service` and ensure it is stopped, as that will interfere with the emulator. 
-8. Run the emulator with root privileges `sudo ./plantiga-ble-emulator`  and proceed with development.
+2. Disable the Linux bluetooth service with `sudo systemctl disable bluetooth.service` and ensure it is stopped, as that will interfere with the emulator. 
+3. Run the emulator with root privileges `sudo ./plantiga-ble-emulator`  and proceed with development.
