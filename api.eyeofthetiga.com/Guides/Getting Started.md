@@ -1,8 +1,8 @@
 # Getting Started
 
+## Seup Flow 
 
-### Setting up the Base Station Emulator
-
+## Setting up the Rasbperry PI 
 
 The Base Station Emulator is intended to be run on a Raspberry Pi running the [Raspberry Pi OS Lite](https://www.raspberrypi.org/software/operating-systems/).
 
@@ -23,10 +23,13 @@ The Base Station Emulator is intended to be run on a Raspberry Pi running the [R
 5. Plug in the microSD card to the Raspberry Pi and plug in the power, allowing up to 5 minutes for the Pi to boot for the first time. The default username is: `pi` and its password is: `raspberry`.
    1. If you are logging in via the tty using Keyboard and HDMI, use `wpa_cli` to configure the wifi, create the file from `step 4` in the location `/etc/wpa_supplicant/wpa_supplicant.conf` and reboot or restart the `wpa_supplicant.service`, or use an ethernet cable to connect to the internet.
    2. If you used `step 3` and `step 4` to set up your Pi, you can connect via ssh (if you are on the same network) using the hostname: `raspberrypi.local`.
-6. Download the latest version of the Emulator binary using the command 
+
+## Install an run the Base Station Emulator
+
+1. Download the latest version of the Emulator binary using the command 
    
    `wget https://storage.googleapis.com/plantiga-prod-downloads/SmartDockBLE/2021.05.12%2B85c69a0/plantiga-ble-emulator`
 
    and use `chmod +x plantiga-ble-emulator` to make it executable.
-7. Disable the Linux bluetooth service with `sudo systemctl disable bluetooth.service` and ensure it is stopped, as that will interfere with the emulator. 
-8. Run the emulator with root privileges `sudo ./plantiga-ble-emulator`  and proceed with development.
+2. Disable the Linux bluetooth service with `sudo systemctl disable bluetooth.service` and ensure it is stopped, as that will interfere with the emulator. 
+3. Run the emulator with root privileges `sudo ./plantiga-ble-emulator`  and proceed with development.
