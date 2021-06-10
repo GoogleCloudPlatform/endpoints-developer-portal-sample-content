@@ -3,13 +3,13 @@
 ## Development Flow 
 
 1. Setup your rasbperry as explained in the [secton below](https://github.com/Plantiga/endpoints-developer-portal/blob/srossross-patch-2/api.eyeofthetiga.com/Guides/Getting%20Started.md#setting-up-the-rasbperry-pi) This step is only required once
-2. Before you want to connect the application, you must run the emulator on the pi [emulator](https://github.com/Plantiga/endpoints-developer-portal/blob/srossross-patch-2/api.eyeofthetiga.com/Guides/Getting%20Started.md#install-an-run-the-base-station-emulator)
+2. Before you want to connect the application, you must [run the emulator on the pi](https://github.com/Plantiga/endpoints-developer-portal/blob/srossross-patch-2/api.eyeofthetiga.com/Guides/Getting%20Started.md#install-and-run-the-base-station-emulator)
 3. To test that the emulator is working you can use a mobile tool like:
     * [LightBlue](https://punchthrough.com/lightblue/) for mobile
     * [BlueSee](https://www.synapse.com/bluesee) for mac desktop
 4. You should be able to get and set the GATT characteristics as documented in our [API documentation](https://endpointsportal.plantiga-dev.cloud.goog/docs/api.eyeofthetiga.com/1/c/Guides/BaseStation)
 
-## Seup Flow 
+## Setup Flow 
 
 To complete a basestation setup you must perform the following steps with the BLE API:
 
@@ -49,7 +49,7 @@ The Base Station Emulator is intended to be run on a Raspberry Pi running the [R
    1. If you are logging in via the tty using Keyboard and HDMI, use `wpa_cli` to configure the wifi, create the file from `step 4` in the location `/etc/wpa_supplicant/wpa_supplicant.conf` and reboot or restart the `wpa_supplicant.service`, or use an ethernet cable to connect to the internet.
    2. If you used `step 3` and `step 4` to set up your Pi, you can connect via ssh (if you are on the same network) using the hostname: `raspberrypi.local`.
 
-## Install an run the Base Station Emulator
+## Install and run the Base Station Emulator
 
 1. Download the latest version of the Emulator binary using the command 
    
