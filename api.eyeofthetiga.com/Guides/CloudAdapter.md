@@ -3,8 +3,8 @@
 
 ### Reference
 
-* (Assigned Numbers)[https://www.bluetooth.com/specifications/assigned-numbers/]
-* (Appearance Values)[https://specificationrefs.bluetooth.com/assigned-values/Appearance%20Values.pdf]
+* [Assigned Numbers](https://www.bluetooth.com/specifications/assigned-numbers/)
+* [Appearance Values](https://specificationrefs.bluetooth.com/assigned-values/Appearance%20Values.pdf)
 
 
 #### TODO
