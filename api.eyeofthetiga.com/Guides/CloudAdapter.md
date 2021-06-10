@@ -7,10 +7,6 @@
 * [Appearance Values](https://specificationrefs.bluetooth.com/assigned-values/Appearance%20Values.pdf)
 
 
-#### TODO
-
-add settings defined here https://github.com/Plantiga/CloudAdapter/issues/206
-
 # About the CloudAdapter Emulator
 # GATT WIFI Service
 
