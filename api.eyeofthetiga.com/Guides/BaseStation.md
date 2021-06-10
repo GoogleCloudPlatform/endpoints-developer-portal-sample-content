@@ -7,7 +7,7 @@
 * [Appearance Values](https://specificationrefs.bluetooth.com/assigned-values/Appearance%20Values.pdf)
 
 
-# About the CloudAdapter Emulator
+# About the BaseStation Emulator
 # GATT WIFI Service
 
 | Allocated UUID | Description                     | Attributes  |
