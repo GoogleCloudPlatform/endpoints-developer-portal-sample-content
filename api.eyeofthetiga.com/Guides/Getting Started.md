@@ -1,9 +1,30 @@
 # Getting Started
 
-## Seup Flow 
+## Development Flow 
 
 1. Setup your rasbperry as explained in the [secton below](https://github.com/Plantiga/endpoints-developer-portal/blob/srossross-patch-2/api.eyeofthetiga.com/Guides/Getting%20Started.md#setting-up-the-rasbperry-pi) This step is only required once
-2. Before you want to connect the application, you must run the emulator on the pi [emulator](https://github.com/Plantiga/endpoints-developer-portal/blob/srossross-patch-2/api.eyeofthetiga.com/Guides/Getting%20Started.md#setting-up-the-rasbperry-pi) 
+2. Before you want to connect the application, you must run the emulator on the pi [emulator](https://github.com/Plantiga/endpoints-developer-portal/blob/srossross-patch-2/api.eyeofthetiga.com/Guides/Getting%20Started.md#install-an-run-the-base-station-emulator)
+3. To test that the emulator is working you can use a mobile tool like:
+    * [LightBlue](https://punchthrough.com/lightblue/) for mobile
+    * [BlueSee](https://www.synapse.com/bluesee) for mac desktop
+4. You should be able to get and set the GATT characteristics as documented in our [API documentation](https://endpointsportal.plantiga-dev.cloud.goog/docs/api.eyeofthetiga.com/1/c/Guides/BaseStation)
+
+## Seup Flow 
+
+To complete a basestation setup you must perform the following steps with the BLE API:
+
+### 1. WIFI SERVICE `0xD000`
+
+1. Set the SSID Characteristic `0xD001`
+2. Set the Password Characteristic `0xD002`
+3. Set the Connect Characteristic `0xD004`
+4. Check the status `0xD005` for `CONNECTED`
+
+### 2. API SERVICE `0xD100`
+
+1. Get the API key by exchanging a `firebase id token` with a `cloud-adapter-token` using our API [/cloud-gears/cloud-adapter-token](https://endpointsportal.plantiga-dev.cloud.goog/docs/api.eyeofthetiga.com/1/routes/cloud-gears/cloud-adapter-token/get)
+1. Set the API key `0xD101` 
+1. Check the API status `0xD102` for `KEY_OK`
 
 
 ## Setting up the Rasbperry PI 
