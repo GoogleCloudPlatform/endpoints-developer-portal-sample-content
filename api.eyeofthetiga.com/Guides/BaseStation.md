@@ -72,10 +72,10 @@ Get or watch the connection status
 
 | Defined Connection Statuses | Description                                                                                 |
 | --------------------------- | ------------------------------------------------------------------------------------------- |
-| `NOT_CONNECTED`             | The default state of the adapter                                                            |
-| `CONNECTING`                | The adapter is attempting to establish a connection and confirm connectivity to our servers |
+| `NOT_CONNECTED`             | The default state of the base station                                                       |
+| `CONNECTING`                | The base station is attempting to establish a connection and confirm connectivity to our servers |
 | `NETWORK_ERROR`             | Unable to connect to the network, check your credentials                                    |
-| `CONNECTION_ERROR`          | Adapter connected to the network, but is unable to reach our servers                        |
+| `CONNECTION_ERROR`          | Base station connected to the network, but is unable to reach our servers                        |
 | `CONNECTED`                 | Full connection is established                                                              |
 
 * `PASSWORD_ERROR` * user password was incorrect -- (put a hold on this for now)
