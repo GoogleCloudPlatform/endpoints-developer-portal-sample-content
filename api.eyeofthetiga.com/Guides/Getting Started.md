@@ -2,6 +2,10 @@
 
 ## Seup Flow 
 
+1. Setup your rasbperry as explained in the [secton below](https://github.com/Plantiga/endpoints-developer-portal/blob/srossross-patch-2/api.eyeofthetiga.com/Guides/Getting%20Started.md#setting-up-the-rasbperry-pi) This step is only required once
+2. Before you want to connect the application, you must run the emulator on the pi [emulator](https://github.com/Plantiga/endpoints-developer-portal/blob/srossross-patch-2/api.eyeofthetiga.com/Guides/Getting%20Started.md#setting-up-the-rasbperry-pi) 
+
+
 ## Setting up the Rasbperry PI 
 
 The Base Station Emulator is intended to be run on a Raspberry Pi running the [Raspberry Pi OS Lite](https://www.raspberrypi.org/software/operating-systems/).
