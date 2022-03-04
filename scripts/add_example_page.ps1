@@ -108,7 +108,7 @@ Function Main()
         # to push (possibly from a failed previous run), or if it's because
         # something else went wrong.
         $searchresults = git commit -m "Example Page added by add_example_page.sh script" | select-string -pattern "(Your branch is up to date)|(Your branch is ahead of origin/master')"
-        if ($searchresults -eq $null) {
+        if ($null -eq $searchresults) {
             Write-Host "git repository not in a good state to push."
             exit 1
         }
